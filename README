@@ -1,0 +1,58 @@
+# BudgetTrackerApp
+
+A simple Java-based budget tracker to manage your incomes and expenses. The application supports adding expenses and incomes, tracking budgets, and displaying reports.
+
+## 🚀 Features
+
+- Add and edit expenses
+- Add and edit incomes
+- View expense reports
+- Budget tracking
+- Simple GUI built with Swing
+
+## 📂 Project Structure
+
+- `AddExpenseWindow.java` - handles the Add Expense dialog
+- `AddIncomeWindow.java` - handles the Add Income dialog
+- `BudgetManager.java` - core business logic
+- `BudgetMenu.java` - menu bar GUI logic
+- `BudgetTrackerApp.java` - main application entry point
+- `Expense.java` - expense data model
+- `Income.java` - income data model
+
+## ⚙️ Requirements
+
+- Java 17 or later
+- Eclipse IDE (optional, but recommended)
+- Git (to contribute)
+
+## 🛠️ Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/BudgetTrackerApp.git
+Open the project in Eclipse:
+
+File → Import → Existing Maven or Java Project → select the folder
+
+Build the project and run BudgetTrackerApp.java as a Java Application.
+
+💻 Usage
+From the main window, click on Add Expense to record an expense.
+
+Click Add Income to record an income.
+
+View your budget summary on the main screen.
+
+🙌 Contributing
+Contributions are welcome! Please:
+
+Fork the repository
+
+Create a feature branch
+
+Commit your changes
+
+Push the branch
+
+Open a Pull Request
