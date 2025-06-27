@@ -2,25 +2,26 @@ package budgettracker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class AddExpenseWindow extends JFrame {
     public AddExpenseWindow(BudgetManager budgetManager) {
         setTitle("Add Expense");
-        setSize(350, 250);
+        setSize(300, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        // Fields
         JTextField amountField = new JTextField();
         JTextField categoryField = new JTextField();
-        JTextField dateField = new JTextField(); // YYYY-MM-DD
+        JTextField dateField = new JTextField();
+
         JButton submitBtn = new JButton("Submit");
 
-        // Layout
         JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        panel.add(new JLabel("Expense Amount:"));
+        panel.add(new JLabel("Amount:"));
         panel.add(amountField);
         panel.add(new JLabel("Category:"));
         panel.add(categoryField);
@@ -32,29 +33,28 @@ public class AddExpenseWindow extends JFrame {
         add(panel);
         setVisible(true);
 
-        // Submit Button Logic
         submitBtn.addActionListener(e -> {
-            String amountText = amountField.getText().trim();
-            String category = categoryField.getText().trim();
-            String date = dateField.getText().trim();
-
-            if (amountText.isEmpty() || category.isEmpty() || date.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please fill all fields.");
-                return;
-            }
-
             try {
-                double amount = Double.parseDouble(amountText);
-                budgetManager.addExpense(amount, category, date);
-                JOptionPane.showMessageDialog(this, "Expense added successfully.");
-                dispose(); // Close the window
+                double amount = Double.parseDouble(amountField.getText().trim());
+                String category = categoryField.getText().trim();
+                LocalDate date = LocalDate.parse(dateField.getText().trim());
+
+                Expense expense = new Expense(amount, category, date);
+                budgetManager.addExpense(expense);
+
+                if (budgetManager.isLimitExceeded(category)) {
+                    JOptionPane.showMessageDialog(this, "⚠ Limit exceeded for category: " + category);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Expense added successfully.");
+                }
+                dispose();
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Enter a valid number for amount.");
+                JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter date in YYYY-MM-DD format.");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error adding expense.");
-                ex.printStackTrace(); // Optional: log to console
             }
         });
     }
 }
-
